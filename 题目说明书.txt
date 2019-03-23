@@ -1,72 +1,71 @@
-#���������˶� ���²����� ------ rosƪ
-#author��buenos
-#weixin: dan1098755906
+#北航机器人队 招新测试题 ------ ros篇
+#author：buenos
 
-�����õ���ros��ص����ʣ�
-���� --- topic
-���� --- publish
-���� --- subscribe
-�ڵ� --- node
+以下用到的ros相关的名词：
+话题 --- topic
+发布 --- publish
+订阅 --- subscribe
+节点 --- node
 
 
-��������
-   ����һ��������ˣ��������¹��ܣ�
-   ������ӵ��λ�ô����������ڼ�⵱ǰ����λ�ã��ô�����������Ϊһ�����⣨pos_msg��,����ͨ�������������
-   ���λ����Ϣ��
-   ������ӵ���˶�ϵͳ�����ڿ����������˶�����ϵͳҲ������Ϊһ�����⣨velocity_msg��������ͨ����������ⷢ
-   ���ٶ���Ϣ���Ӷ������Լ����˶���
-   �����˻�ӵ�м��Ŀ��Ĵ����������ڵõ�����Ŀ����������Ϣ���ô�����������Ϊһ�����⣨treasure_msg����
-   ͨ�����ĸû��⣬���Եõ�����Ŀ�������ͷ�ֵ
-   ���ݵõ���Ŀ��㣬���ƻ�����ǰ���ô����õ��㹻�Ļ��ֺ�ȥ���յ㣬�������������ʱ����Ϊ���б�׼��
+背景介绍
+   现有一虚拟机器人，具有如下功能：
+   机器人拥有位置传感器，用于检测当前所在位置，该传感器被虚拟为一个话题（pos_msg）,可以通过订阅这个话题
+   获得位置信息。
+   机器人拥有运动系统，用于控制自身的运动，该系统也被虚拟为一个话题（velocity_msg），可以通过向这个话题发
+   布速度信息，从而控制自己的运动。
+   机器人还拥有检测目标的传感器，用于得到关于目标点的坐标信息，该传感器被虚拟为一个话题（treasure_msg），
+   通过订阅该话题，可以得到关于目标点坐标和分值
+   根据得到的目标点，控制机器人前往该处，得到足够的积分后去往终点，任务结束。以用时长短为评判标准。
 
-���ڻ��⣬������������͵�˵����
+关于话题，服务的数据类型的说明：
    pos_msg   int64 x , int64 y
    velocity_msg   int8 vx, int8 vy
    treasure_msg   int64 x, int64 y, int8 w
 
-   �����������͵Ľ�һ���˽⣬����ͨ��ѧϰrosmsg ,rossrv,������в鿴
+   关于数据类型的进一步了解，可以通过学习rosmsg ,rossrv,命令进行查看
 
 
 
-���ǰ��׼���������°�װ��������
-1.��װVMware�����       https://www.vmware.com/
-2.��������ϰ�װUbuntuϵͳ  https://www.ubuntu.com/download/desktop
-3.��װpython   ע��Ubuntu�Դ�python�����谲װ������汾Ϊ Python2.7
-3.��Ubuntu�а�װ ros    
-   �汾��kinetic  ��װ�̳�   http://wiki.ros.org/kinetic/Installation/Ubuntu
-4.ѧϰʹ��ros    http://wiki.ros.org/cn/ROS/Tutorials
-5.Ϊ��ɱ��β��ԣ�������Ҫ���ⰲװpython�ĵ������� pygame
-  ������ʾ��Ϸ����
-  ��װpygame�� sudo apt-get install python-pygame
+编程前的准备：（以下安装请联网）
+1.安装VMware虚拟机       https://www.vmware.com/
+2.在虚拟机上安装Ubuntu系统  https://www.ubuntu.com/download/desktop
+3.安装python   注：Ubuntu自带python，无需安装。建议版本为 Python2.7
+3.在Ubuntu中安装 ros    
+   版本：kinetic  安装教程   http://wiki.ros.org/kinetic/Installation/Ubuntu
+4.学习使用ros    http://wiki.ros.org/cn/ROS/Tutorials
+5.为完成本次测试，您还需要额外安装python的第三方库 pygame
+  用于显示游戏画面
+  安装pygame： sudo apt-get install python-pygame
 
 
-�ṩ������˵����
-   ���ǽ���Ϊ���ṩһ��ros���������Ϊ��first_player����
-   �ں��ļ���first_player/script/
-		3.game.py      �ɳ������ṩ�����ڴһ������ƽ̨�����ļ�������Ķ���
-		4.myrobot.py   (��ͬѧ���б�д���ļ���  �ṩ�����߼�����
-		5.settings.py   һ�����������ļ�������һЩ������Ϣ
-			�յ����꣬Ŀ���ֵ�������˵�����ٶȵ���Ϣ�������ڡ�
-   ���ṩһ����������ʾ��Ƶ��������Ч��ͼ����Ƶ����������������Ҫ�󣬲������Žⷨ����
+提供的资料说明；
+   我们将会为你提供一个ros程序包，名为（first_player）。
+   内含文件：first_player/script/
+		3.game.py      由出题人提供，用于搭建一个测试平台，此文件不建议改动。
+		4.myrobot.py   (由同学自行编写的文件）  提供总体逻辑控制
+		5.settings.py   一个基础配置文件，包含一些常量信息
+			终点坐标，目标分值，机器人的最大速度等信息均含在内、
+   还提供一个完整的演示视频，及最终效果图（视频仅仅完成了最基本的要求，并非最优解法）。
 
 
-�ӷֵ㣺
-    1.����·���滮���㷨��ÿ���³���һ�������ʱ������һ��·���滮������Ҫ����Ŀ�����ֵ��Ⱥ�˳������˶�������ȡ�÷�Ч����ߵķ�ʽ��ɱ������мӷ�
-    2.������x,y�ٶȵ�ƽ����������ٶ����ƣ�����ζ������Ҫ��������x,y���ٶȣ�ʹ�켣ΪԲ�������ߣ��мӷ֡�
-    3.����������ԣ�Pythonic�������˳���Ա�Ļ��������������ı��������������������������߼��ṹ������ʵ�ַ������мӷ֡�
+加分点：
+    1.采用路径规划的算法，每次新出现一个坐标点时，进行一次路径规划（不需要按照目标点出现的先后顺序进行运动），采取得分效率最高的方式完成比赛，有加分
+    2.机器人x,y速度的平方和有最高速度限制，这意味着你需要合理分配x,y的速度，使轨迹为圆滑的曲线，有加分。
+    3.程序的优雅性（Pythonic）体现了程序员的基本素养，优美的变量，函数，类命名，清晰的逻辑结构，简洁的实现方法，有加分。
 
-�����ţ�
-     ���������������������ݣ������ɳ������ṩ������������ͨ����дһ�����Ƴ���myrobot.py���ļ�ȱʡ��,��������
- �����������������ĿҪ�������
+任务安排：
+     背景介绍中所述所有内容，均已由出题人提供，本次任务是通过编写一个控制程序（myrobot.py此文件缺省）,调用上述
+ “传感器”，完成题目要求的任务。
 
 
-������
-	ϣ��ͬѧ���������Ŀ�Ĺ����У�ѧ��ʹ��ros��һЩ�������
+期望：
+	希望同学们在完成题目的过程中，学会使用ros的一些常用命令，
 	rostopic ,rosmsg ,rossrv, roscd, rosed,rosls,roscore,roslaunch,rqt_gragh,rqt_bag....
-	ϣ��ͬѧ���ܲ������ѣ�˳�������Ŀ
+	希望同学们能不惧困难，顺利完成题目
 
-ע��
-	������Ŀ��ģ��֮����������ϵ����ѯ�ʣ���л��Ĳ��롣
+注：
+	关于题目的模糊之处，可以联系作者询问，感谢你的参与。
 
 
 
