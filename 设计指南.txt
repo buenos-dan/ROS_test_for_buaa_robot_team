@@ -1,0 +1,43 @@
+你设计的程序应具备以下基本功能
+
+1.创建并初始化节点（
+	有了节点才可以订阅或发布话题
+	"robot"为节点名称，可以随意命名）
+  rospy.init_node("robot",anonymous = True)
+
+2.订阅位置信息(
+	func为响应函数，自命名,自己完成其功能
+	"pos_msg" 为话题名，不得更改，机器人的位置信息从此订阅
+	Pos 为消息的数据类型，实例化一个Pos: p = Pos()
+	该数据类型在 first_player/msg/Pos.msg 中，使用前需引入，
+	即在文件顶部 from first_player.msg import Pos
+	)
+  rospy.Subscriber("pos_msg",Pos,func)
+
+3.订阅宝藏坐标信息（
+	func为响应函数，自命名，自己完成其功能
+	"treasure_msg" 为话题名，不得更改，宝藏的坐标信息由此订阅
+	treasurePos为消息的数据类型，实例化一个treasurePos: tp = treasurePos()
+	该数据类型在 first_player/msg/treasurePos.msg 中，使用前需引入，
+	即在文件顶部 from first_player.msg import treasurePos
+	）
+  rospy.Subscriber("treasure_msg",treasurePos,func)
+
+4.发布速度信息（
+	pub 为发布话题的一个实例化
+	"velocity_msg"为速度话题的名称
+	Vel 为消息的数据类型，实例化一个Vel: v = Vel()
+	queue = 10 以队列的数据结构作为缓冲区处理消息的方式
+	即堆积超过10条消息尚未发出，则删去先进入缓冲区的，保存
+	最新进来的消息。由于本程序规模小，发送频率高，基本上满足
+	即收即发，queue的设置无关紧要。
+	）
+  pub = rospy.Publisher("velocity_msg",Vel,queue = 10) #实例化一个发布器
+  v = Vel()       #实例化一个速度消息
+  v.vx = 1        #为v填充数据
+  v.vy = 1
+  pub.publish(v)   #将v发布出去
+
+5.设置发布频率（
+	r = rospy.Rate(100)        #100hz
+	将r.sleep() 插入主循环内，即可控制程序以100hz的频率运行，效果等同于延时函数。
