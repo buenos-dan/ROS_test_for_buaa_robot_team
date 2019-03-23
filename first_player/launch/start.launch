@@ -1,0 +1,5 @@
+<launch>
+<node pkg = "first_player" name = "game" type = "game.py" />
+#<node pkg = "first_player" name = "player" type = "myrobot.py" />
+</launch>
+
